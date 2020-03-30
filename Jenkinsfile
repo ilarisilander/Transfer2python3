@@ -8,7 +8,7 @@ pipeline {
     }
     stage('run') {
       steps {
-        sh 'python ./python/dronelauncher_python.py'
+        sh 'python3 ./python/dronelauncher_python.py'
       }
     }
   }
