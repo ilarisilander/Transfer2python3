@@ -8,9 +8,9 @@ Library     ./library/getip.py
 
 Library     Process
 
-Test Setup  Begin Web Test
+Suite Setup  Begin Web Test
 
-Test Teardown   End Web Test
+Suite Teardown   End Web Test
 
 
 
@@ -20,7 +20,7 @@ Test Teardown   End Web Test
 
 ${BROWSER} =    chrome
 
-${URL} =    http://192.168.1.127:5000
+${URL} =    http://192.168.1.12:5000
 
 ${IP} =     return_ip
 
@@ -30,8 +30,6 @@ ${PORT} =   5000
 
 Begin Web Test
 
-      Start Process     resources/start_server.sh  shell=yes
-
       Open Browser      ${URL}  	${BROWSER}
 
       Maximize Browser Window
@@ -39,8 +37,6 @@ Begin Web Test
 
 
 End Web Test
-
-	Terminate Process
 
 	Close Browser
 
