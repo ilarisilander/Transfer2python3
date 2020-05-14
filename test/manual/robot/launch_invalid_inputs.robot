@@ -40,3 +40,4 @@ Invalid Input
 *** Test Cases ***
 Launch Invalid Inputs Should Fail           ${invalidInput}
     [Documentation]                         Failing test means the input value is acceptable
+    Invalid Input                           

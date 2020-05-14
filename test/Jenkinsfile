@@ -23,12 +23,6 @@ pipeline {
     		    sh 'resources/run_tests_headless.sh HalfWindow.robot'
     		}
         dir("test/manual/robot") {
-    		    sh 'resources/run_tests_headless.sh launch.robot'
-    		}
-        dir("test/manual/robot") {
-    		    sh 'resources/run_tests_headless.sh launch_invalid_inputs.robot'
-    		}
-        dir("test/manual/robot") {
     		    sh 'resources/run_tests_headless.sh videoWindowButtonTest.robot'
     		}
         dir("test/manual/robot") {
@@ -54,13 +48,28 @@ pipeline {
         }
       }
     }
-    stage('Unit test') {
+    stage('Drone Launcher Unit Tests') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
           sh 'python3 -m pytest -v -s test/manual/unittest/test_manual_launcher_python.py'
         }
         sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_mount_function.py'
         sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_stop_function.py'
+        sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_prepare_function.py'
+        sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_standby_function.py'
+        sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_launch_function.py'
+        sh 'python3 -m pytest -v -s test/manual/unittest/test_drone_launcher_rotate.py'
+        sh 'python3 -m pytest -v -s test/manual/unittest/test_drone_launcher_python.py'
+      }
+    }
+    stage('Infotiv Launcher Unit Tests') {
+      steps {
+        sh 'python3 -m pytest -v -s test/infotiv_launcher/test_automated_functions.py'
+        sh 'python3 -m pytest -v -s test/infotiv_launcher/test_launch_functions.py'
+        sh 'python3 -m pytest -v -s test/infotiv_launcher/test_lift_functions.py'
+        sh 'python3 -m pytest -v -s test/infotiv_launcher/test_pitch_functions.py'
+        sh 'python3 -m pytest -v -s test/infotiv_launcher/test_rotation_functions.py'
+        sh 'python3 -m pytest -v -s test/infotiv_launcher/test_variable_update_functions.py'
       }
     }
   }
