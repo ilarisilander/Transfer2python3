@@ -3,3 +3,4 @@
 .pyc
 /test/manual/robot/results/*
 \#*
+/test/results
