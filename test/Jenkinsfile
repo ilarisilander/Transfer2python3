@@ -1,0 +1,68 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/ilarisilander/Transfer2python3.git'
+      }
+    }
+    stage('Robot') {
+      steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'robot -d test/results test/manual/robot/launch_invalid_inputs.robot'
+        }
+		    sh 'robot -d test/results test/manual/robot/launch.robot'
+		    sh 'robot -d test/results test/automatic/robot/automatic.robot'
+        dir("test/manual/robot") {
+  		    sh 'resources/run_tests_headless.sh pitch.robot'
+  		  }
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh MaxMin.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh HalfWindow.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh launch.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh launch_invalid_inputs.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh videoWindowButtonTest.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh lift.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh positionWindow.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh resizeWindow.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh rotate.robot'
+    		}
+        dir("test/manual/robot") {
+    		    sh 'resources/run_tests_headless.sh rotate.boundaries.robot'
+    		}
+
+      }
+
+    }
+    stage('Unit test') {
+      steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          sh 'python3 -m pytest -v -s test/manual/unittest/test_manual_launcher_python.py'
+        }
+        sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_mount_function.py'
+        sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_stop_function.py'
+      }
+    }
+    post {
+      always {
+        chuckNorris()
+      }
+    }
+  }
+}
