@@ -48,7 +48,11 @@ pipeline {
     		}
 
       }
-
+      post {
+        always {
+          chuckNorris()
+        }
+      }
     }
     stage('Unit test') {
       steps {
@@ -57,11 +61,6 @@ pipeline {
         }
         sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_mount_function.py'
         sh 'python3 -m pytest -v -s test/automatic/unittest/test_automatic_stop_function.py'
-      }
-    }
-    post {
-      always {
-        chuckNorris()
       }
     }
   }
