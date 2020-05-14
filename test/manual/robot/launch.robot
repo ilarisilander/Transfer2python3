@@ -3,6 +3,7 @@ Documentation
 Library                                     SeleniumLibrary
 Library                                     Process
 Library                                     ./library/UrlLibrary.py
+Resource                                    ./../../keywords/keywords.robot
 Test Setup                                  Begin Web Test
 Test Teardown                               End Web Test
 
@@ -15,13 +16,6 @@ ${BROWSER} =                                headlesschrome
 #2. Locate the "python.exe" file in the Python 3 folder.
 #3. Copy and Paste the "python.exe" file within the Python 3 folder.
 #4. Rename the copied file to "python3" (or whatever you want the command to be).
-Begin Web Test
-    ${URL}=                                 Get Url
-    Start Process                           python3    ./python/dronelauncher_python.py    shell=True
-    Open Browser                            about:blank     ${BROWSER}
-    Maximize Browser Window
-    Go To                                   ${URL}
-
 End Web Test
     Close Browser
     Terminate All Processes
@@ -42,13 +36,6 @@ Press Button Backwards
 Press Button Forwards
     Click Button                            id:script_launch_forwards
     Sleep                                   1
-
-Verify Function Is Called
-    [Arguments]                             ${function}
-    ${result}                               Terminate Process
-    Process Should Be Stopped
-    Should Contain                          ${result.stderr}  ${function}
-
 
 Launch Input
     [Arguments]                             ${number}
@@ -73,6 +60,7 @@ Launch input-box w/ invalid negative input
     Alert Should Be Present                 text=Value should be between 0 and 111
     Verify Function Is Called               POST /app_launch_position HTTP/1.1
 
+
 #Input valid value should be between 0-111
 Launch input-box w/ invalid positive input
     [Tags]                                  INPUT
@@ -81,6 +69,7 @@ Launch input-box w/ invalid positive input
     Click Go
     Alert Should Be Present                 text=Value should be between 0 and 111
     Verify Function Is Called               POST /app_launch_position HTTP/1.1
+
 
 #Input valid value should be between 0-111
 Launch input-box w/ min valid input
@@ -98,6 +87,7 @@ Launch input-box w/ min+1 valid input
     Launch Input                            1
     Click Go
     Verify Function Is Called               POST /app_launch_position HTTP/1.1
+
 
 #Input valid value should be between 0-111
 Launch input-box w/ max-1 valid input
@@ -126,6 +116,7 @@ Functionable Button Backwards
     When Press Button Backwards
     Then Verify Function Is Called          POST /app_launch_backwards HTTP/1.1
 
+
 Functionable Button Forwards
     [Documentation]                         Since there is no intended visible response after pressing button forwards, this testcase tests button function
     ...                                     by checking whether the action of clicking button forwards calls the targeted method function_launch_forwards()
@@ -134,3 +125,43 @@ Functionable Button Forwards
     Given Encoders Reset
     When Press Button Forwards
     Then Verify Function Is Called          POST /app_launch_forwards HTTP/1.1
+
+
+Launch input-box pressing arrow up
+    [Tags]                                  Arrows
+    Encoders Reset
+    Input Text                              name:launch_position        6
+    Press Keys                              name:launch_position        ARROW_UP    ARROW_UP    ARROW_UP
+    Textfield Value Should Be               name:launch_position        9
+    Click Go
+    Verify Function Is Called               POST /app_launch_position HTTP/1.1
+
+
+Launch input-box pressing arrow up max
+    [Tags]                                  Arrows
+    Encoders Reset
+    Input Text                              name:launch_position        110
+    Press Keys                              name:launch_position        ARROW_UP    ARROW_UP    ARROW_UP    ARROW_UP    ARROW_UP
+    Textfield Value Should Be               name:launch_position        111
+    Click Go
+    Verify Function Is Called               POST /app_launch_position HTTP/1.1
+
+
+Launch input-box pressing arrow down
+    [Tags]                                  Arrows
+    Encoders Reset
+    Input Text                              name:launch_position        4
+    Press Keys                              name:launch_position        ARROW_DOWN    ARROW_DOWN    ARROW_DOWN
+    Textfield Value Should Be               name:launch_position        1
+    Click Go
+    Verify Function Is Called               POST /app_launch_position HTTP/1.1
+
+
+Launch input-box pressing arrow down max
+    [Tags]                                  Arrows
+    Encoders Reset
+    Input Text                              name:launch_position        2
+    Press Keys                              name:launch_position        ARROW_DOWN    ARROW_DOWN    ARROW_DOWN    ARROW_DOWN    ARROW_DOWN
+    Textfield Value Should Be               name:launch_position        0
+    Click Go
+    Verify Function Is Called               POST /app_launch_position HTTP/1.1

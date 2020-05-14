@@ -6,8 +6,13 @@ pipeline {
         git 'https://github.com/Q2MORY17/SSRS-Drone-Launcher-Beta'
       }
     }
-    
-    stage('Unit test') {
+    stage('Robot Framework/Selenium tests') {
+      steps {
+        sh 'robot -d test/results test/settings/robot/DroneTest.robot'
+      }
+    }
+
+    stage('Unit tests') {
       steps {
         sh 'python3 -m pytest test/manual/unittest/test_dronelauncher_python.py'
       }
