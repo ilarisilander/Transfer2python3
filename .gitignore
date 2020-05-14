@@ -4,3 +4,4 @@
 /test/manual/robot/results/*
 \#*
 /test/results
+test/results/output.xml
