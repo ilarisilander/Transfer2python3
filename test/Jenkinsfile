@@ -40,7 +40,7 @@ pipeline {
         dir("test/manual/robot") {
     		    sh 'resources/run_tests_headless.sh rotate.boundaries.robot'
     		}
-        sh 'robot -d test/results test\settings\robot\DroneTest.robot'
+        sh 'robot -d test/results test/settings/robot/DroneTest.robot'
       }
       post {
         always {
