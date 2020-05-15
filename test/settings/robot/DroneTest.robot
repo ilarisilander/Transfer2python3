@@ -9,7 +9,7 @@ Test Setup  Begin web test
 Test Teardown  End web test
 
 *** Variables ***
-${BROWSER}  firefox
+${BROWSER}  headlesschrome
 
 *** Test Cases ***
 Change Pitch Test1
