@@ -26,11 +26,8 @@ Begin Web Test
 
 End Web Test
     Close Browser
-<<<<<<< HEAD
-    Terminate All Processes                 
-=======
     Terminate All Processes
->>>>>>> upstream/master
+
 
 Encoders Reset
     Click Button                            id:script_reset_encoders
