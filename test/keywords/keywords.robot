@@ -1,5 +1,4 @@
 *** Keywords ***
-#Comments
 Verify Function Is Called
     [Arguments]                             ${function}
     ${result}                               Terminate Process
