@@ -1,5 +1,4 @@
 *** Keywords ***
-# These are keywords myeeees
 Verify Function Is Called
     [Arguments]                             ${function}
     ${result}                               Terminate Process
