@@ -24,15 +24,3 @@ Reset Enconders Button
     Given Server Is Up
     When User Clicks Reset Encoders Button
     Verify Function Is Called               POST /${RESET_ENCODERS}/1.1
-
-# Home Button
-#     Given Server Is Up
-#     When User Clicks Home Button
-#     ${log}=                 Check Log
-#     Should contain               ${log}      POST /${HOME}/1.1
-
-# Reset Enconders Button
-#     Given Server Is Up
-#     When User Clicks Reset Encoders Button
-#     ${log}=                 Check Log
-#     Should contain              ${log}      POST /${RESET_ENCODERS}/1.1
